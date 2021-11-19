@@ -78,13 +78,15 @@ app.put('/user/:id',(req,res)=>{
 })
 
 
-app.delete('/user/:id',(req,res)=>{
-    if(users[req.params.id]){
-        users[req.params.id] ={};
-        res.send('user deleted');
-    }else{
-        res.send('user not found');
+app.delete('/user/:id', (req, res) => {
+
+  User.findByIdAndRemove(req.params.id, (err, data) => {
+    if (!err) {
+      res.send("user deleted")
+    } else {
+      res.status(500).send("error happened")
     }
+  })
 })
 
 app.listen(port,()=>{
